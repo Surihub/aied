@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>d3</title>
+        <script src="https://d3js.org/d3.v5.min.js"></script>
+    </head>
+<body>
+         <!-- <script> -->
+        <!-- // function kmeans(data, k) {
+        //     // Step 1: Select K random points as initial centroids
+        //     let centroids = [];
+        //     for (let i = 0; i < k; i++) {
+        //         centroids[i] = data[Math.floor(Math.random() * data.length)];
+        //     }
+
+        //     let previousCentroids, clusters;
+
+        //     // Step 4: Repeat until convergence
+        //     do {
+        //         // Step 2: Assign each data point to the closest centroid
+        //         clusters = [];
+        //         for (let i = 0; i < k; i++) {
+        //             clusters.push([]);
+        //         }
+
+        //         for (let point of data) {
+        //             let smallestDistance = Infinity;
+        //             let clusterIndex = 0;
+        //             for (let i = 0; i < k; i++) {
+        //                 let distance = Math.sqrt(
+        //                     Math.pow(point[0] - centroids[i][0], 2) +
+        //                     Math.pow(point[1] - centroids[i][1], 2)
+        //                 );
+        //                 if (distance < smallestDistance) {
+        //                     smallestDistance = distance;
+        //                     clusterIndex = i;
+        //                 }
+        //             }
+        //             clusters[clusterIndex].push(point);
+        //         }
+
+        //         // Step 3: Update centroids
+        //         previousCentroids = centroids;
+        //         centroids = [];
+        //         for (let i = 0; i < k; i++) {
+        //             let x = 0, y = 0;
+        //             for (let point of clusters[i]) {
+        //                 x += point[0];
+        //                 y += point[1];
+        //             }
+        //             centroids.push([x / clusters[i].length, y / clusters[i].length]);
+        //         }
+
+        //     } while (!hasConverged(centroids, previousCentroids));
+
+        //     return clusters;
+        // }
+
+        // function hasConverged(centroids, previousCentroids) {
+        //     if (previousCentroids == null) return false;
+        //     for (let i = 0; i < centroids.length; i++) {
+        //         if (centroids[i][0] !== previousCentroids[i][0] ||
+        //             centroids[i][1] !== previousCentroids[i][1]) {
+        //             return false;
+        //         }
+        //     }
+        //     return true;
+        // }
+
+        // // Your JavaScript code will go here
+        // // Load the data from the CSV file
+        // d3.csv("Iris.csv").then(function(data) {
+        //     // Extract the relevant data
+        //     let irisData = data.map(d => [parseFloat(d.SepalLengthCm), parseFloat(d.SepalWidthCm)]);
+            
+        //     // Run K-Means clustering
+        //     let clusters = kmeans(irisData, 3);
+            
+        //     // Visualize with D3.js
+        //     let svg = d3.select("body").append("svg")
+        //         .attr("width", 500)
+        //         .attr("height", 500);
+            
+        //     // Scale the data
+        //     let xScale = d3.scaleLinear().domain([4, 8]).range([0, 500]);
+        //     let yScale = d3.scaleLinear().domain([2, 5]).range([500, 0]);
+            
+        //     // Add circles for each data point
+        //     clusters.forEach((cluster, clusterIdx) => {
+        //         svg.selectAll("circle" + clusterIdx)
+        //             .data(cluster)
+        //             .enter().append("circle")
+        //             .attr("cx", d => xScale(d[0]))
+        //             .attr("cy", d => yScale(d[1]))
+        //             .attr("r", 5)
+        //             .attr("fill", d3.schemeCategory10[clusterIdx]);
+        //     });
+        // }).catch(function(error) {
+        //     console.log(error);
+        // }); </script> -->
+
+
+
+</body>
+</html>

@@ -1,0 +1,40 @@
+.fixed-bottom {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+}
+
+
+/* github icon */
+.github-icon {
+    margin-left: 10px;
+    color: black; /* 원하는 색상으로 변경 가능 */
+}
+
+.github-icon:hover {
+    color: rgb(207, 167, 37); /* 호버 시 색상 변경 */
+}
+
+
+/* nav */
+
+.navbar {
+    background-color: #f8f9fa; /* 예시로 연한 회색을 사용, 원하는 색으로 변경 가능 */
+    font-family: 'Arial', sans-serif; /* 폰트 스타일 변경 */
+}
+
+.nav-link {
+    color: #555; /* 링크 색상 변경 */
+    font-weight: bold; /* 폰트 두께 변경 */
+}
+
+.nav-link:hover {
+    color: #007bff; /* 호버 시 색상 변경 */
+    background-color: #eef; /* 호버 시 배경색 변경 */
+}
+
+/* 활성 링크 스타일 (클래스를 추가하거나 다른 방식으로 구현 필요) */
+.nav-link.active {
+    color: #fff;
+    background-color: #007bff;
+}
