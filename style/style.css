@@ -17,10 +17,14 @@
 
 
 /* nav */
-
 .navbar {
-    background-color: #f8f9fa; /* 예시로 연한 회색을 사용, 원하는 색으로 변경 가능 */
-    font-family: 'Arial', sans-serif; /* 폰트 스타일 변경 */
+    background-color: #96caff; /* 예시로 연한 회색을 사용, 원하는 색으로 변경 가능 */
+    /* font-family: 'Arial', sans-serif; 폰트 스타일 변경 */
+    margin-top: 0 !important;
+    margin-bottom: 20px !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    
 }
 
 .nav-link {
@@ -29,8 +33,8 @@
 }
 
 .nav-link:hover {
-    color: #007bff; /* 호버 시 색상 변경 */
-    background-color: #eef; /* 호버 시 배경색 변경 */
+    color: #ededed; /* 호버 시 색상 변경 */
+    background-color: rgb(75, 162, 255); /* 호버 시 배경색 변경 */
 }
 
 /* 활성 링크 스타일 (클래스를 추가하거나 다른 방식으로 구현 필요) */
@@ -39,3 +43,9 @@
     background-color: #007bff;
 }
 
+/* 부트스트랩의 컨테이너 상단과 하단 마진을 제거합니다 */
+.container, .container-fluid {
+    margin-top: 0 !important; /* 'important'는 부트스트랩의 기본 스타일을 오버라이드하기 위해 사용됩니다 */
+    margin-bottom: 0 !important;
+}
+  
