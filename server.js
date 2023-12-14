@@ -8,7 +8,7 @@ app.listen(8080, function(){
 
 });
 
-app.get('/aied/home', function(요청, 응답){
+app.get('/aied', function(요청, 응답){
     응답.sendFile(__dirname+"/index.html")
 })
 
