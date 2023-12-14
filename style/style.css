@@ -33,9 +33,13 @@
 }
 
 .nav-link:hover {
-    color: #ededed; /* 호버 시 색상 변경 */
+    color: #ffffff; /* 호버 시 색상 변경 */
     background-color: rgb(75, 162, 255); /* 호버 시 배경색 변경 */
+    border-radius: 5px; /* Rounded corners */
+    text-shadow: 1px 1ㄴpx 2px rgba(0, 0, 0, 0.5); /* Slight text shadow for depth */
+    transition: color 0.3s ease, background-color 0.3s ease, text-shadow 0.3s ease; /* Smooth transition for color and shadow changes */
 }
+
 
 /* 활성 링크 스타일 (클래스를 추가하거나 다른 방식으로 구현 필요) */
 .nav-link.active {
