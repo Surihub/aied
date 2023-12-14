@@ -22,6 +22,6 @@ app.get('/aied/XR', function(요청, 응답){
 
 // 누군가가 /eda로 방문을 하면 관련 안내문을 띄워주자
 app.get('/aied/EDA', function(요청, 응답){
-    응답.sendFile(__dirname+"/data.html")
+    응답.sendFile(__dirname+"/EDA.html")
 })
 
