@@ -8,20 +8,20 @@ app.listen(8080, function(){
 
 });
 
-app.get('/', function(요청, 응답){
+app.get('/aied', function(요청, 응답){
     응답.sendFile(__dirname+"/index.html")
 })
 
-app.get('/math', function(요청, 응답){
+app.get('/aied/math', function(요청, 응답){
     응답.sendFile(__dirname+"/math.html")
 })
 
-app.get('/XR', function(요청, 응답){
+app.get('/aied/XR', function(요청, 응답){
     응답.sendFile(__dirname+"/XR.html")
 })
 
 // 누군가가 /eda로 방문을 하면 관련 안내문을 띄워주자
-app.get('/EDA', function(요청, 응답){
+app.get('/aied/EDA', function(요청, 응답){
     응답.sendFile(__dirname+"/data.html")
 })
 
