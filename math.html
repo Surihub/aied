@@ -1,0 +1,80 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>AIEDNET team 9 - XR Technology</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="bg-light">
+
+<div class="container my-5">
+    <header class="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom">
+        <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-dark text-decoration-none">
+            <span class="fs-1">Dive into math</span>
+        </a>
+    </header>
+    
+    <nav class="navbar navbar-expand-lg navbar-light bg-white mb-4">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">project</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="/index.html">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/XR">증강현실</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/math">자동피드백</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/EDA">데이터분석</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>                
+                
+    <h1>답안 자동 채점 시스템</h1>
+
+    <!-- 문제 1 -->
+    <p>문제 1: 파이썬에서 리스트를 만드는 방법은 무엇인가요? (예: [1, 2, 3])</p>
+    <input type="text" id="answer1" placeholder="여기에 답을 입력하세요" />
+    
+    <!-- 문제 2 -->
+    <p>문제 2: 파이썬에서 문자열을 대문자로 바꾸는 메소드는 무엇인가요? (예: upper)</p>
+    <input type="text" id="answer2" placeholder="여기에 답을 입력하세요" />
+
+    <!-- 제출 버튼 -->
+    <button onclick="grade()">답안 제출</button>
+
+    <!-- 채점 결과 표시 -->
+    <p id="result"></p>
+
+    <script>
+        function grade() {
+            // 사용자의 답안을 가져옵니다
+            var answer1 = document.getElementById('answer1').value;
+            var answer2 = document.getElementById('answer2').value;
+
+            // 점수를 계산합니다
+            var score = 0;
+            if (answer1.trim().toLowerCase() === '[]') {
+                score += 1;
+            }
+            if (answer2.trim().toLowerCase() === 'upper') {
+                score += 1;
+            }
+
+            // 결과를 표시합니다
+            var resultText = '점수: ' + score + ' / 2';
+            document.getElementById('result').innerText = resultText;
+        }
+    </script>
+</body>
+</html>
