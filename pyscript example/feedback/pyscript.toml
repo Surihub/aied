@@ -1,0 +1,2 @@
+name = 'streamlit'
+packages = ["streamlit"]
