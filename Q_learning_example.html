@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://pyscript.net/alpha/pyscript.css">
+    <script defer src="https://pyscript.net/alpha/pyscript.js"></script>
+    <link href="style/style.css" rel="stylesheet">
+
+    <title>거북이 미로 탈출(Q-learning 실습)</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+    <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-50">
+
+    <py-env>
+        - numpy
+        - pandas
+        - matplotlib
+    </py-env>
+
+    <div class="container mx-auto px-4 py-8">
+        <div id="header"></div>
+
+        <div class="mb-6">
+            <h1 class="text-4xl font-semibold text-gray-800 text-center">거북이 미로 탈출</h1>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div class="bg-white shadow-lg rounded-lg p-6">
+                <p class="text-gray-700 text-lg">
+<b>학습 목표 : </b> 거북이 미로 탈출 예제를 통한 Q-learning 학습 <br>
+<b>대상 학년 : </b> 고등학교 1~2학년 <br><br>
+
+<b> 내용 구성 : </b> <br>
+1. 강화학습의 기본 용어 <br>
+2. Q-learning 이란? <br>
+3. Python을 이용한 Q-learning 실습 <br><br>
+
+이 페이지는 2023년 AI융합교육학과에서 지원해준 학생연구 장기 프로젝트를 통해 개발되었습니다. <br>
+참여자 : 황수빈, 신인섭, 왕효원, 최병홍
+                </p>
+            </div>
+            <div class="max-w-sm rounded overflow-hidden shadow-lg">
+                <img class="w-full" src="image/image.png" alt="Maze Image">
+            </div>
+        </div>
+    </div>
+    <div class = "container mx-auto px-4 py-8">
+        <h2 class="text-3xl font-bold text-center mb-4">강화학습의 기본 용어</h2>
+        <div class="bg-white shadow rounded-lg p-6">
+                    <p class="text-lg">
+<b> 강화학습이란? : </b><b>에이전트</b>가 현재의 <b>상태</b>에서 <b>행동</b>을 하고, 행동에 대한 <b>보상</b>을 받으며 최적의 정책을 찾아가는 학습이다.
+<br><br>
+<b> 에이전트 : </b> 학습하는 대상을 의미한다. (거북이) <br>
+<b> 상태 : </b> 에이전트가 처한 상황이다. (미로 안 거북이의 위치) <br>
+<b> 행동 : </b> 에이전트가 처한 상황에 대응하여 행동한다. (거북이의 상,하,좌,우 움직임) <br>
+<b> 보상 : </b> 에이전트가 행동에 대해 보상을 받는다. 부정적인 보상, 긍정적인 보상 모두 존재한다. (미로 탈출 시 긍정적인 보상) <br>
+<b> 에피소드 : </b> 시작하고 끝날때까지의 에이전트의 상태와 행동을 의미한다. (거북이가 미로를 탈출할 때까지 지나간 위치와 위치에서 거북이가 이동한 방향)<br>
+                    </p>
+        </div>
+    </div>
+    <div class = "container mx-auto px-4 py-8">
+        <h2 class="text-3xl font-bold text-center mb-4">Q-learning이란?</h2>
+        <div class="bg-white shadow rounded-lg p-6">
+                    <p class="text-lg">
+<b> Q-value : </b> 에이전트가 처한 상태에서 행동에 따른 예상 보상을 수치로 나타낸 값이다. <br>
+<b> Q-learning : </b> 여러번의 에피소드를 통해 Q-value를 업데이트하는 학습 방법이다. 학습이 완료된 이후 상태에 따라 Q-value가 가장 높은 행동을 취한다. <br>
+<b> Q-table : </b> 상태와 행동에 대한 Q-value으로 이루어진 표다. <br>
+<b> epsilon greedy : </b> 에이전트가 행동을 결정할 때 Q-value가 가장 높은 행동으로 결정한다. epsilon 변수를 통해 일정 확률 만큼 에이전트가 랜덤으로 행동을 결정하게 한다. <br>                
+                    </p>
+        </div>
+    </div>
+    <!--- 미로 그리기 -->
+    <div class="container mx-auto px-4 py-8">
+        <h2 class="text-3xl font-bold text-center mb-4">미로 그리기</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div class="bg-white shadow rounded-lg p-6">
+                <p class="text-lg">
+<b> 미로의 규칙 </b> <br> <br>
+1. 미로는 가로 세로 길이가 1인 박스 25개(가로 5칸, 세로 5칸)로 구성되어 있다. <br>
+2. 거북이는 0번 박스에서 시작한다. <br>
+3. 거북이는 한 번에 한 박스만 이동 가능하다. <br>
+4. 박스 사이에 빨간 벽이 있는 경우에 거북이는 그 벽을 넘어서 이동할 수 없다. <br>
+5. 거북이가 탈출 장소(GOAL)에 도착하면 미로를 탈출한다. <br> <br>
+
+<b> 파이썬을 이용하여 미로 시각화하기 </b> <br> <br>
+파이썬의 matplotlib.pylot을 이용하여 좌표 평면 위에 거북이가 탈출할 미로를 그릴 수 있다.<br>
+미로의 왼쪽 아래 꼭짓점을 (0,0)으로 생각하면 된다.<br><br>
+
+<b> (심화) 자기만의 미로 만들기 </b> <br> <br>
+제공된 미로만을 사용하고 싶은 경우 코드를 수정할 필요는 없다. <br>
+자기만의 미로를 만들어 실습을 진행하고 싶다면, 코드의 주석 중 (커스터마이징)이라고 적혀 있는 부분을 참고하면 된다. <br>
+(커스터마이징)이 적힌 부분은 자기만의 미로를 만들때 활용되는 코드로, 각 부분의 커스터마이징 방법은 주석에 적혀있다.
+                </p>
+        </div>
+        <div class="max-w-sm rounded overflow-hidden shadow-lg">
+            <p class="text-lg"><b>미로 예시</b><br></p>
+            <img class="w-full" src="image/example.png" alt="Maze Example">
+        </div>
+        </div>
+    </div>
+    <div id="headers"></div>
+    <py-repl id="import-package">
+import numpy as np
+import matplotlib.pyplot as plt
+    </py-repl>
+    <py-repl id="draw-maze">
+fig = plt.figure(figsize=(5, 5))
+ax = plt.gca()
+        
+# 가로 세로가 5칸인 미로 만들기        
+for j in range(5,0,-1):
+    for i in range(5):
+        plt.text(i+0.5, j-0.5, f"{5*(5-j)+i}", size=14, ha='center')
+        
+# 시작 지점(START)과 탈출 장소(GOAL) 만들기
+plt.text(0.5, 4.3, 'START', ha='center')
+plt.text(4.5, 0.3, 'GOAL', ha='center') 
+        
+"""
+(커스터마이징)붉은 벽 그리기 
+(x1, y1)과 (x2,y2)를 연결하는 벽을 그리는 방법 : 
+plt.plot([x1, x2], [y1, y2], color='red', linewidth=2)
+"""
+plt.plot([1, 5], [4, 4], color='red', linewidth=2)
+plt.plot([1, 1], [1, 4], color='red', linewidth=2)
+plt.plot([1, 3], [1, 1], color='red', linewidth=2)
+plt.plot([1, 2], [3, 3], color='red', linewidth=2)
+plt.plot([4, 4], [0, 3], color='red', linewidth=2)
+plt.plot([2, 4], [2, 2], color='red', linewidth=2)
+plt.plot([3, 4], [3, 3], color='red', linewidth=2)
+        
+# 그림을 그릴 범위 및 눈금 제거 설정
+ax.set_xlim(0, 5)
+ax.set_ylim(0, 5)
+plt.tick_params(axis='both', which='both', bottom=False, top=False,
+                labelbottom=False, right=False, left=False, labelleft=False)
+                
+# S0에 녹색 원으로 현재 위치를 표시
+line, = ax.plot([0.5], [4.5], marker="o", color='g', markersize=45)
+fig
+    </py-repl>
+
+    <div class="container mx-auto px-4 py-8">
+        <h2 class="text-3xl font-bold text-center mb-4">미로 탈출 경로 시각화하기</h2>
+        <div class="bg-white shadow rounded-lg p-6">
+                <p class="text-lg">
+<b> 미로 탈출 경로를 시각화 하는 방법 </b> <br> <br>
+1. 탈출 장소에 해당하는 박스를 클릭한다. <br>
+2. 위에서 파이썬 코드로 그린 미로에 맞게 미로 안에 빨간 벽을 세워준다. 박스의 변을 누른다면 빨간 벽이 만들어진다. <br>
+3. 거북이의 탈출 경로를 숫자로 나열한다. 숫자 사이에는 쉼표(",")를 넣어준다. (예시 : 1, 2, 3) <br>
+4. <b>거북이 이동 시작!</b> 버튼을 누른다면 거북이가 이동하는 경로를 확인할 수 있다. <br> <br>
+
+1과 2를 하다가 잘못 만들거나, 새로운 미로를 만들고 싶을 때는 <b>빨간 벽 지우기</b>, <b>탈출 장소 지우기</b>를 클릭하면 됩니다. <br><br>
+<span class="red-text"><b>새로고침하면 미로에서 변경된 내용이 사라지니 새로고침하지마세요!!</b></span>
+                </p>
+        </div>
+    </div>
+
+    <div class="max-w-2xl mx-auto my-10 p-5" id="interactive-maze">
+        <div class="grid grid-cols-5 gap-4 relative">
+            <!-- Boxes -->
+            <!-- Using a loop to generate boxes -->
+            <script>
+              for (let i = 0; i < 25; i++) {
+                document.write(`<div class="box border-2 border-dashed border-gray-400 p-4 text-center cursor-pointer" id="cell-${i}" onclick="markGoal(this)">${i}</div>`);
+              }
+            </script>
+        </div>
+        <div class="mt-6">
+            <input type="text" id="numberInput" placeholder="이동 경로를 입력해주세요" class="w-full p-2 border-2 border-gray-300 rounded-md focus:outline-none focus:border-blue-500" />
+        </div>
+        <div class="flex space-x-4 mt-4">
+        <button id="startButton" class="px-6 py-2 border rounded text-white bg-blue-500 hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50">
+            거북이 이동 시작!
+        </button>
+        <button id="clearred" class="px-6 py-2 border rounded text-white bg-green-500 hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-opacity-50">
+            빨간 벽 지우기
+        </button>
+        <button id="cleargoal" class="px-6 py-2 border rounded text-white bg-green-500 hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-opacity-50">
+            탈출 장소 지우기
+        </button>
+        </div>
+    </div>
+      
+    <script>
+        document.getElementById('startButton').addEventListener('click', function() {
+          const input = document.getElementById('numberInput').value;
+          const sequence = input.split(',').map(num => parseInt(num.trim(), 10));
+          sequence.forEach((number, index) => {
+            setTimeout(() => {
+              const cell = document.getElementById(`cell-${number}`);
+              if (cell) {
+                cell.classList.add('highlight');
+                setTimeout(() => cell.classList.remove('highlight'), 900);
+              }
+            }, index * 1000);
+          });
+        });
+
+        
+        document.getElementById('clearred').addEventListener('click', function() {
+            for (let i = 0; i < 25; i++) {
+                const cell = document.getElementById(`cell-${i}`);
+                cell.style.borderLeft = '2px dashed #9CA3AF';
+                cell.style.borderTop = '2px dashed #9CA3AF';
+                cell.style.borderBottom = '2px dashed #9CA3AF';
+                cell.style.borderRight = '2px dashed #9CA3AF';
+            }
+        });
+
+        document.getElementById('cleargoal').addEventListener('click', function() {
+            for (let i = 0; i < 25; i++) {
+                const cell = document.getElementById(`cell-${i}`);
+                cell.innerHTML = i;
+                cell.classList.remove('goal');
+            }
+        });
+
+        function markGoal(element) {
+            const box = element;
+            const rect = box.getBoundingClientRect();
+            const x = event.clientX - rect.left;
+            const y = event.clientY - rect.top;
+            const tolerance = 10; // Edge click tolerance
+
+            // Check if click is near the edges
+            if (x < tolerance) {
+            box.style.borderLeft = '2px solid red';
+            } else if (x > rect.width - tolerance) {
+            box.style.borderRight = '2px solid red';
+            } else if (y < tolerance) {
+            box.style.borderTop = '2px solid red';
+            } else if (y > rect.height - tolerance) {
+            box.style.borderBottom = '2px solid red';
+            } else {
+            element.classList.toggle('goal');
+            element.textContent = element.classList.contains('goal') ? '탈출 장소' : element.textContent;
+            }
+
+        }
+    </script>
+    <div class="container mx-auto px-4 py-8">
+        <h2 class="text-3xl font-bold text-center mb-4">Q-table 및 함수 만들기</h2>
+        <div class="bg-white shadow rounded-lg p-6">
+                <p class="text-lg">
+<b>Q_table : </b>초기 Q-value 값이다. <br>
+<b>reward : </b>미로 안 각 위치에 대한 보상 값이다. <br>
+<b>get_next_action : </b>Q-value에 기반하여 상태에 따른 행동을 결정하는 함수, 1-epsilon 확률 만큼 랜덤으로 행동을 결정한다. <br>
+<b>get_next_location : </b>상태에 따른 행동의 결과 이동할 새로운 위치를 알려주는 함수이다. <br>
+<b>get_path : </b>거북이의 탈출 경로를 알려주는 함수이다.
+                </p>
+        </div>
+    </div>
+    <py-repl id="define-theta0">
+"""
+(커스터마이징) 초기 Q-table을 설정주자.
+- 각 줄은 0번부터 23번 박스를 나타낸다.
+- 줄마다 4개의 값이 있으며, 순서대로 위, 오른쪽, 아래, 왼쪽 방향으로의 이동에 대한 Q-value이다.
+- 커스터마이징을 하는 경우 위에서 만든 미로에 맞추어 초깃값을 수정하면 된다.
+- 미로의 경계나 빨간 벽에 막힌 방향은 np.nan으로 놓고 이동 가능한 방향은 0으로 놓으면 된다.
+예시: 12번이 아래 방향이 막히고 나머지 방향으로는 이동이 가능한 경우
+12번째 줄에 [0, 0, np.nan, 0] 입력
+"""
+Q_table = np.array([[np.nan, 0, 0, np.nan],  # 0
+                    [np.nan, 0, np.nan, 0],  # 1
+                    [np.nan, 0, np.nan, 0],  # 2
+                    [np.nan, 0, np.nan, 0],  # 3
+                    [np.nan, np.nan, np.nan, 0],  # 4
+                    [0, np.nan, 0, np.nan],  # 5
+                    [np.nan, 0, np.nan, np.nan],  # 6
+                    [np.nan, 0, 0, 0],  # 7
+                    [np.nan, 0, np.nan, 0],  # 8
+                    [np.nan, np.nan, 0, 0],  # 9
+                    [0, np.nan, 0, np.nan],  # 10
+                    [np.nan, 0, 0, np.nan],  # 11
+                    [0, 0, np.nan, 0],  # 12
+                    [np.nan, np.nan, np.nan, 0],  # 13
+                    [0, np.nan, 0, np.nan],  # 14
+                    [0, np.nan, 0, np.nan],  # 15
+                    [0, 0, np.nan, np.nan],  # 16
+                    [np.nan, 0, np.nan, 0],  # 17
+                    [np.nan, np.nan, 0, 0],  # 18
+                    [0, np.nan, 0, np.nan],  # 19
+                    [0, 0, np.nan, np.nan],  # 20
+                    [np.nan, 0, np.nan, 0],  # 21
+                    [np.nan, 0, np.nan, 0],  # 22
+                    [0, np.nan, np.nan, 0],  # 23
+                    [0, np.nan, np.nan, 0], #24
+                    ])
+
+# 보상값들을 설정
+# 탈출 장소는 100, 나머지는 -1로 설정
+rewards = -1 * np.ones(25)
+rewards[-1] = 100
+    </py-repl>
+    <div class="container mx-auto px-4 py-8">
+        <div class="bg-white shadow rounded-lg p-6">
+                <p class="text-lg">
+미로 탈출을 학습하지 않은 경우 거북이가 어떻게 움직이는지 관찰해봅시다.<br>
+이때, 거북이는 이동이 가능한 방향 중 랜덤으로 한 방향을 골라 움직인다.<br>
+아래의 코드 실행 결과에서 대괄호([])를 제외한 부분을 복사 후 <b>미로 탈출 경로 시각화하기</b>에 붙여넣어 탈출 경로를 관찰해봅시다. <br><br>
+<span class="red-text"><b>5번째 줄과 28번째 줄 fix를 &lt;로 수정해주세요</b></span>
+                </p>
+        </div>
+    </div>           
+    <py-repl id="define-functions">
+# 다음 행동을 결정해주는 함수
+# Q_value가 가장 높은 행동으로 결정
+# 1 - epsilon의확률로 다음 행동을 랜덤하게 결정 
+def get_next_action(current_box, epsilon):
+    if np.random.random() fix epsilon: #nan 값들을 무시하기 위해 nanargmax 사용
+        return np.nanargmax(Q_table[current_box])
+    else: # 움직일 수 있는 방향 중 하나를 랜덤하게 선택
+        return np.random.choice(np.where(~np.isnan(Q_table[current_box]))[0])
+
+# 현재 위치와 행동을 가지고 다음 단계의 위치를 계산하는 함수
+def get_next_location(current_box, action_index):
+    if action_index == 0: # 위로 이동
+        new_box = current_box - 5 
+    elif action_index == 1: # 오른쪽으로 이동
+        new_box = current_box + 1
+    elif action_index == 2: # 밑으로 이동
+        new_box = current_box + 5
+    elif action_index == 3: # 왼쪽으로 이동
+        new_box = current_box - 1 
+    return new_box
+
+# 탈출 경로를 찾는 함수
+def get_path():
+    current_box = 0 # 박스 0에서 출발
+    shortest_path = [] # 탈출 경로를 저장할 리스트
+    shortest_path.append(current_box)
+    count = 0
+    while current_box != 24 and count fix 30 : # 24에 도착하면 끝 30번 이동하면 끝
+        action_index = get_next_action(current_box, 1.) # 최적의 선택을 해야하기에 epsilon = 1
+        current_box = get_next_location(current_box, action_index)
+        shortest_path.append(current_box)
+        count += 1
+    return shortest_path
+
+# 학습되지 않은 상태에서 움직인 경우
+before_learn_path = get_path()
+# 미로를 탈출하지 못하기 때문에 30에서 끊어주기
+print(before_learn_path[:30])
+    </py-repl>
+    <div class="max-w-2xl mx-auto my-10 p-5">
+    <div class="flex space-x-4 mt-4">
+        <button id="moveButton1" class="px-6 py-2 border rounded text-white bg-blue-500 hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50">
+            미로 탈출 경로 시각화하기로 이동
+        </button>
+    </div>
+    </div>
+    <script>
+        document.getElementById('moveButton1').addEventListener('click', function() {
+          const targetElement = document.getElementById("interactive-maze");
+          targetElement.scrollIntoView({ behavior: 'smooth' });
+        });
+    </script>
+
+    <div class="container mx-auto px-4 py-8">
+        <h2 class="text-3xl font-bold text-center mb-4">Q-value 업데이트 하는 방법</h2>
+        <div class="bg-white shadow rounded-lg p-6">
+                <p class="text-lg">
+Temporal Differences를 통해 Q-value를 업데이트 한다. <br>
+(Temporal Difference) = (행동에 따른 보상) + discount_factor * (다음 위치의 Q-value 중 최댓값) - (old Q-value) <br>
+(새로운 Q-value) = (old Q-value) + learning_rate * (Temporal Difference) <br>
+한번 이동할때마다 위의 식을 이용해서 Q-value를 업데이트 한다. <br>
+예를 들어 거북이가 3번 박스에서 왼쪽으로 갔다면, 거북이가 이동함과 동시에 3번 박스의 왼쪽 행동에 대한 Q-value가 업데이트 된다. 
+                </p>
+        </div>
+    </div>
+    <py-repl id="Q-learning">
+"""
+(커스터마이징)
+학습의 hyperparameter 조정하기
+"""
+epsilon = 0.9
+discount_factor = 0.9
+learning_rate = 0.9
+
+for episode in range(100): # 100번의 에피소드 
+    current_box = 0 # 박스 0에서 출발
+    while current_box != 24: # 24에 도착하면 끝
+        # 행동 정하기
+        action_index = get_next_action(current_box, epsilon)
+
+        # 현재의 위치를 다른 변수명에 저장
+        # 이동할 위치를 원래 변수명에 저장
+        old_box = current_box 
+        current_box = get_next_location(current_box, action_index)
+        
+        # 행동에 따라 이동할 위치에 대한 보상
+        reward = rewards[current_box]
+
+        # Temporal Differences를 이용하여 Q_table 업데이트 하기
+        old_q_value = Q_table[old_box, action_index] # 업데이트할 q_value 가지고 오기
+        temporal_difference = reward + (discount_factor * np.nanmax(Q_table[current_box])) - old_q_value # TDs 계산
+
+        new_q_value = old_q_value + (learning_rate * temporal_difference) 
+        Q_table[old_box, action_index] = new_q_value # 업데이트하기
+
+    print(f'에피소드 {episode} 종료')
+    </py-repl>
+    <py-repl id="shortest_path">
+def get_shortest_path():
+    current_box = 0 # 박스 0에서 출발, 원하는 출발 위치로 지정 가능
+    shortest_path = [] # 탈출 경로를 저장할 리스트
+    shortest_path.append(current_box)
+    while current_box != 24: # 24에 도착하면 끝
+        action_index = get_next_action(current_box, 1.) # 최적의 선택을 해야하기에 epsilon = 1
+        current_box = get_next_location(current_box, action_index)
+        shortest_path.append(current_box)
+    return shortest_path
+
+after_learn_path = get_shortest_path()
+print(after_learn_path)
+    </py-repl>
+    <div class="max-w-2xl mx-auto my-10 p-5">
+    <div class="flex space-x-4 mt-4">
+        <button id="moveButton2" class="px-6 py-2 border rounded text-white bg-blue-500 hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50">
+            미로 탈출 경로 시각화하기로 이동
+        </button>
+    </div>
+    </div>
+    <script>
+        document.getElementById('moveButton2').addEventListener('click', function() {
+          const targetElement = document.getElementById("interactive-maze");
+          targetElement.scrollIntoView({ behavior: 'smooth' });
+        });
+    </script>
+
+    <div class="container mx-auto px-4 py-8">
+        <div class="bg-white shadow rounded-lg p-6">
+            <p class="text-lg">
+    참고 자료 : <br>
+    1. PyTorch를 활용한 강화학습 / 심층강화학습 실전 입문. (오가와 유타로 지음, 심효섭 옮김) <br>
+    2. Q-learning : A Complete Example in Python. (Dr. Daniel Soper) <a href="https://youtu.be/iKdlKYG78j4?si=tz-mk32g1yV-PbUX"> 유튜브 링크 </a>
+            </p>
+        </div>
+        <div id="footer"></div>
+
+        <script>
+            $(function() {
+                $("#header").load("header.html");
+                $("#footer").load("footer.html");
+            });
+        </script>
+    </div>
+
+</body>
+</html>
+

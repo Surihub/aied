@@ -53,3 +53,31 @@
     margin-bottom: 0 !important;
 }
   
+/* 추가된 CSS 스타일 */
+.answer-input {
+    height: 100px; /* 증가된 높이 */
+    margin-top: 10px; /* 문제 아래에 위치하도록 여백 추가 */
+}
+
+/* q learning */
+body {
+    font-family: 'Inter', sans-serif;
+}
+.red-text {
+    color: red;
+}
+.box {
+    transition: background-color 0.3s, border-color 0.3s;
+}
+.box.goal {
+    background-color: gold;
+}
+.highlight {
+    border-color: yellow;
+    animation: highlight 1s ease-in-out;
+}
+@keyframes highlight {
+    0% { background-color: transparent; }
+    50% { background-color: yellow; }
+    100% { background-color: transparent; }
+}
