@@ -1,0 +1,40 @@
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script type="module" src="./main"></script>
+  <style>
+    body{
+      margin: 0;
+    }
+    #item-buttons,#confirm-buttons {
+      position: absolute;
+      top: 50px;
+      z-index: 2;
+      display: flex;
+      flex-direction: row;
+      display: none;
+    }
+    .button-image {
+      width: 50px;
+      height: 50px;
+      object-fit: cover;
+      margin: 5px;
+    }
+    .button {
+      width: 50px;
+      height: 50px;
+      margin: 5px;
+    }
+  </style>
+</head>
+<body>
+  <div id="item-buttons">
+    <img class="button-image" id="item0" src="../../assets/models/coffee-table/thumbnail.png"/>
+    <img class="button-image" id="item1" src="../../assets/models/chair/thumbnail.png"/>
+    <img class="button-image" id="item2" src="../../assets/models/cushion/thumbnail.png"/>
+  </div>
+  <div id="confirm-buttons">
+    <button class="button" id="place">OK</button>
+    <button class="button" id="cancel">X</button>
+  </div>
+</body>
+</html>

@@ -1,0 +1,46 @@
+<html>
+  <head>
+    <meta name ="viewport" content="width=device-width, initial-scale = 1.0">
+    <script src="../applications/libs/mindar/mindar-image-three.prod.js"></script>
+    <script src ="./CylinderSample.js" type = "module"></script>
+    <style>
+      html, body {
+        position: relative;
+        margin: 0;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+      }
+      #buttons{
+        position: absolute;
+        bottom: 0;
+        z-index: 10;
+        top: 90%;
+        left: 50%;
+        transform: translateX(-50%);
+        text-align: center;
+      }
+      #fold, #unfold{
+        color: green;
+        margin: 2px; /* Add some margin between buttons */
+        font-size: 15px;
+        display: none;
+      }
+      #pause{
+        color: darkred;
+        margin: 2px; /* Add some margin between buttons */
+        font-size: 15px;
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <div id="buttons">
+      <button id="fold">펼치기</button>
+      <button id="unfold">접기</button>
+      <button id="pause">멈추기</button>
+    </div>
+  </body>
+</html>
