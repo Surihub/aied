@@ -17,11 +17,14 @@
 
 
         <div class="container my-5">
-            <script type="text/javascript" src='config/apikey.js'></script>
-            <!-- <input type="text" class="apiKey" placeholder="여기에 OpenAI API 키를 입력하세요"> -->
+            <div class="api-container">
+                <input type="text" id="apiKey" class="apiKey" placeholder="Enter API Key">
+                <button onclick="checkApiKey()" class="btn btn-primary">API 확인</button>
+            </div>
+
 
             <div id="question-container"></div>
-
+   
         
         <button onclick="studentanswer()" class="btn btn-primary">내 답안 보기</button>
         <p id="studentanswer_all">버튼을 누르면 여기에 여러분의 답안이 나타납니다. </p>

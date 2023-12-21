@@ -1,4 +1,5 @@
 
+
 // 문항 정보 불러오기
 document.addEventListener('DOMContentLoaded', () => {
     fetch('data/문항 정보.csv')
@@ -77,23 +78,33 @@ async function studentanswer() {
 }
 
 
-async function appendTextToStudentAnswer() {
-    var answer1 = document.getElementById('answer1').value;
-    var answer2 = document.getElementById('answer2').value;
-    var answer3 = document.getElementById('answer3').value;
-    var answer4 = document.getElementById('answer4').value;
-    var answer5 = document.getElementById('answer5').value;    
-    var ans1 = `문항1에 대한 답:${answer1}\n문항2에 대한 답:${answer2}\n문항3에 대한 답:${answer3}\n문항4에 대한 답:${answer4}\n문항5에 대한 답:${answer5}\n`;
-    var ans2 = `${prompt}\<학생답안>${ans1}`
+// async function appendTextToStudentAnswer() {
+//     var answer1 = document.getElementById('answer1').value;
+//     var answer2 = document.getElementById('answer2').value;
+//     var answer3 = document.getElementById('answer3').value;
+//     var answer4 = document.getElementById('answer4').value;
+//     var answer5 = document.getElementById('answer5').value;    
+//     var ans1 = `문항1에 대한 답:${answer1}\n문항2에 대한 답:${answer2}\n문항3에 대한 답:${answer3}\n문항4에 대한 답:${answer4}\n문항5에 대한 답:${answer5}\n`;
+//     var ans2 = `${prompt}\<학생답안>${ans1}`
 
-    document.getElementById('final_result').innerText = ans2;
+//     // document.getElementById('final_result').innerText = ans2;
 
+// }
+
+
+function checkApiKey() {
+    // API 키를 확인하는 코드를 여기에 작성
+    var apiKey = document.getElementById('apiKey').value;
+    console.log(apiKey);
+    // 여기에 API 키 유효성 검사 로직을 추가할 수 있습니다.
+    return apiKey
 }
 
-
-
 async function diagnosis_feedback() {
-    const apiKey = config.apiKey;
+    // const apiKey = config.apiKey;
+    apiKey = checkApiKey();
+    console.log('diagnosis_feedback');
+    console.log(apiKey);
 
     var answer1 = document.getElementById('answer1').value;
     var answer2 = document.getElementById('answer2').value;
