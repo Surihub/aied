@@ -6,6 +6,31 @@
     <title>증강현실 체험</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="style/style.css" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@900&display=swap" rel="stylesheet">
+    <style>
+        #imgContainer{
+            width: 70%;
+        }
+        #contentsContainer{
+            text-align: center;
+        }
+        #linkContainer{
+            margin: 2%;
+            border: 0;
+            width: 70%;
+        }
+        #buttonLink{
+            text-decoration: none;
+            margin: 3%;
+            font-size: 30px;
+            font-family: 'Noto Sans KR', sans-serif;
+            border: 0;
+            background-color: rgb(242, 242, 242);
+            color: black;
+        }
+    </style>
 
 </head>
 <body class="bg-light">
@@ -16,27 +41,51 @@
         <div class="row g-5">
             <div class="col-md-8">
                 <h2>증강현실을 활용한 학습 콘텐츠 설계</h2>
-                <p class="fs-5 col-md-8">증강현실 활용 학습 콘텐츠 두 가지</p>
-                <div class="mb-5">
-                </div>
+                <p class="fs-5 col-md-8">
+                    스마트폰으로 즐길 수 있는 증강현실 콘텐츠입니다.
+                </p>
+                <p>
+                    Android 기기: Chrome 사용 권장<br>
+                    iOS 기기: Safari 또는 <a href="https://apps.apple.com/app/id1295998056">WebXR Viewer</a>사용 권장
+                </p>
+                <br>
                 
                 <!-- Example content -->
                 <article class="blog-post">
-                    <h3 class="blog-post-title">입체도형의 전개도 fold/unfold 애니메이션 관찰</h3>
-                    <p>Extended Reality (XR) encompasses a variety of immersive technologies including virtual reality (VR), augmented reality (AR), and mixed reality (MR). Learn about the foundational concepts and how they're applied in different industries.</p>
+                    <h3 class="blog-post-title">입체도형의 전개도 펼치기/접기 애니메이션 관찰</h3>
+                    <p>
+                        아래 링크로 접속하여 카메라가 켜지면 아래 이미지를 비춰보세요. 이미지를 비춰보면 원기둥과 함께 전개도를 펼치고 접을 수 있는 버튼이 나타납니다.
+                        본 애플리케이션은 학생들이 직접 전개도를 펼치고 다시 접는 과정을 반복하고 관찰하면서 입체도형을 탐구할 수 있는 환경을 제공합니다.
+                    </p>
+                    <p id="contentsContainer">
+                        <img id="imgContainer"src="./XRContents/1_Developments/target_image.jpg"><br>
+                        <button id="linkContainer"><a id="buttonLink" href="./XRContents/1_Developments/CylinderSample.html">증강현실 체험하러 가기</a></button>
+                    </p>
                 </article>
-                
+                <br>
                 <article class="blog-post">
                     <h3 class="blog-post-title">프랑스 파리의 에펠탑 인근 탐방하기</h3>
-                    <p>Discover how XR is being used to create engaging and interactive learning experiences, making education more accessible and effective.</p>
+                    <p>
+                        아래 링크로 접속하여 카메라로 바닥을 비춰보세요. 바닥에 아래 이미지와 같이 하얀 고리가 나타나면 화면을 터치해보세요. 
+                        프랑스 파리의 대표적인 관광명소인 에펠탑과 인근 지역의 3차원 지도가 나타납니다.
+                        본 애플리케이션은 학생들이 직접 카메라로 지도 곳곳을 비춰보면서 탐구할 수 있는 환경을 제공합니다.
+                        <br>
+                        *iOS 기기 사용자의 경우, 이 앱은 <a href="https://apps.apple.com/app/id1295998056">WebXR Viewer</a>에서만 작동합니다.
+                    </p>
+                    <p id="contentsContainer">
+                        <img id="imgContainer"src="./XRContents/2_EiffelTower/reticle.png"><br>
+                        <button id="linkContainer"><a id="buttonLink" href="./XRContents/2_EiffelTower/WorldTrackEiffel.html">증강현실 체험하러 가기</a></button>
+                    </p>
                 </article>
             </div>
             
             <div class="col-md-4">
                 <div class="position-sticky" style="top: 2rem;">
                     <div class="p-4 mb-3 bg-light rounded">
-                        <h4>XR Projects</h4>
-                        <p class="mb-0">Explore our latest projects in XR technology, pushing the boundaries of immersive experiences in education and beyond.</p>
+                        <h4>WebAR 프로젝트</h4>
+                        <p class="mb-0">
+                            본 연구에서는 WebAR 제작을 위해 html과 JavaScript를 사용했으며, Blender를 활용해 3d 모델을 제작하였습니다.
+                        </p>
                     </div>
                 </div>
             </div>

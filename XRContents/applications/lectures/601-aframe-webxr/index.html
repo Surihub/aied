@@ -1,0 +1,25 @@
+<html>
+  <head>
+    <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
+    <script src="./components.js"></script>
+
+    <style>
+      #overlay {
+	position: fixed;
+	top: 100px;
+	padding: 10px;
+	z-index: 1001;
+      }
+    </style>
+  </head>
+  <body>
+    <a-scene webxr="requiredFeatures:hit-test; optionalFeatures:dom-overlay; referenceSpaceType:local; overlayElement:#overlay" background="transparent: true"> 
+      <a-box id="box" width="0.1" height="0.1" depth="0.1" color="#0000FF" visible="false">v</a-box>
+      <a-entity ar-reticle geometry="primitive: ring; radiusInner: 0.15; radiusOuter: 0.2" rotation="-90 0 0" visible="false"></a-entity>
+    </a-scene>
+
+    <div id="overlay">
+      Overlay
+    </div>
+  </body>
+</html>
