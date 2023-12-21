@@ -55,7 +55,7 @@
   
 /* 추가된 CSS 스타일 */
 .answer-input {
-    height: 100px; /* 증가된 높이 */
+    height: 50px; /* 증가된 높이 */
     margin-top: 10px; /* 문제 아래에 위치하도록 여백 추가 */
 }
 
@@ -80,4 +80,28 @@ body {
     0% { background-color: transparent; }
     50% { background-color: yellow; }
     100% { background-color: transparent; }
+}
+
+.apiKey {
+    width: 270px;
+    padding: 13px; /* 패딩 */
+    border: 2px solid rgb(250, 212, 22); /* 테두리 */
+    border-radius: 5px; /* 테두리 둥글게 */
+    font-size: 16px; /* 글자 크기 */
+    color: #333; /* 글자 색상 */
+    background-color: #fff3a6; /* 배경 색상 */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* 그림자 효과 */
+    margin-bottom: 20px; /* 아래쪽 여백 */
+}
+
+.apiKey:focus {
+    border-color: #3C8DBC; /* 포커스 시 테두리 색상 */
+    box-shadow: 0 0 15px rgba(60, 141, 188, 0.5); /* 포커스 시 그림자 효과 */
+    outline: none; /* 기본 포커스 테두리 제거 */
+}
+
+
+.prompt {
+    padding:10px;
+    color: red;
 }
