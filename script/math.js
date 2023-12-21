@@ -94,16 +94,7 @@ async function appendTextToStudentAnswer() {
 
 async function diagnosis_feedback() {
     const apiKey = config.apiKey;
-    console.log(apiKey);
 
-    // const apiKey = document.getElementById('apiKey');
-    // console.log('apiKey');
-    // if (!apiKey) {
-    //     alert('API 키를 입력해주세요.');
-    //     console.log(apiKey);
-    //     return;
-    // }
-    // const apiKey = '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';
     var answer1 = document.getElementById('answer1').value;
     var answer2 = document.getElementById('answer2').value;
     var answer3 = document.getElementById('answer3').value;
