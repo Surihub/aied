@@ -8,18 +8,75 @@
     <link href="style/style.css" rel="stylesheet">
     <link href="style/scatterplot.css" rel="stylesheet">
     <script type="module" src="script/eda2.js"></script>
-    <script src="https://d3js.org/d3.v5.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        h2 {
+            color: #333;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            padding: 8px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        tr:hover {
+            background-color: #f5f5f5;
+        }
+    </style>
 
 </head>
 <body class="bg-light">
 
 <div class="container my-5">
     <div id="header"></div>
-    <div id="scatter-plot"></div>
+
+    <h2>What is "penguins" data?</h2>
+        <p>펭귄 데이터는 남극 지역 펭귄들의 다양한 특성을 담고 있습니다. 이를 통해 생태학적 특성과 환경 적응력을 연구할 수 있으며, 데이터 과학과 인공지능 분야에서도 흥미로운 분석 대상이 됩니다. 펭귄들의 다양한 생활 방식과 특성을 이해하는 데 큰 도움을 줍니다.</p>
+        <img src="/image/penguins.png" alt="펭귄 이미지" style="max-width:100%;">
+    <h2>Considering penguins data</h2>
+    <table border="1">
+        <tr>
+            <th>종류</th>
+            <th>섬</th>
+            <th>부리 길이(mm)</th>
+            <th>부리 깊이(mm)</th>
+            <th>날개 길이(mm)</th>
+            <th>몸무게(g)</th>
+            <th>성별</th>
+        </tr>
+        <tr>
+            <td>Adelie</td>
+            <td>Torgersen</td>
+            <td>39.1</td>
+            <td>18.7</td>
+            <td>181</td>
+            <td>3750</td>
+            <td>Male</td>
+        </tr>
+        <!-- 여기에 더 많은 데이터 행을 추가하세요 -->
+    </table>  
+    <h2>Explore the data</h2>
+    <h3>categorical data</h3>
     <div id="pie-chart"></div>
-    <div id="box-plot"></div>
-    <!-- 파일 업로드를 위한 input 태그 -->
-    <input type="file" id="fileInput" accept=".csv">
+
+    <h3>numerical data</h3>
+    <div id="histogram"></div>
+
+    <div id="scatter-plot"></div>
+
+    <h2>Classify and Predict!</h2>
+    <h2>펭귄 데이터 클러스터링 결과</h2>
+
+    <h2>펭귄 데이터 회귀분석</h2>
+
     <!-- 시각화를 위한 div -->
     <div class="canvas"></div>
 
@@ -35,9 +92,6 @@
     </script>
 </div>
 
-<script>
-    // Additional JavaScript for interactivity or data loading
-</script>
 
 </body>
 </html>
