@@ -6,19 +6,40 @@
     <title>자동채점 및 진단</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="style/style.css" rel="stylesheet">
-
+    <!-- 파이스크립트 -->
+    <link rel="stylesheet" href="https://pyscript.net/latest/pyscript.css" />
+    <script defer src="https://pyscript.net/latest/pyscript.js"></script>
 </head>
 <body class="bg-light">
-
     <div class="container my-5">
         <div id="header"></div>
-        
-        <h1>답안 자동 채점 시스템</h1>
-
 
         <div class="container my-5">
+            <div class="bg-white shadow-lg rounded-lg custom-padding">
+                <!-- Left Column for Text -->
+                <div class="row">
+                    <div class="col-md-8">
+                        <h2>Math tutor</h2>
+                        <p><br>📨 일차방정식과 관련된 다섯 문항을 풀어보세요. 다섯 문항에 필요한 인지요소는 다음 세 가지 입니다. 여러분의 답안에 대한 GPT의 진단을 살펴보고 학습에 참고하세요!</p>
+                        <li>상황을 문자로 표현하기</li>
+                        <li>일차식의 계산</li>
+                        <li>해의 의미</li>
+                    </div>
+                    <div class="col-md-4">
+                        <img src="/image/tutor.png" alt="Relevant Description" style="width: 100%;">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+
+        
+        <div class="container my-5">
             <div class="api-container">
-                <input type="text" id="apiKey" class="apiKey" placeholder="Enter API Key">
+                <h4>OpenAI API를 입력해주세요.</h4>
+                <input type="password" id="apiKey" class="apiKey" placeholder="Enter API Key">
                 <button onclick="checkApiKey()" class="btn btn-primary">API 확인</button>
             </div>
 
@@ -27,17 +48,14 @@
    
         
         <button onclick="studentanswer()" class="btn btn-primary">내 답안 보기</button>
-        <p id="studentanswer_all">버튼을 누르면 여기에 여러분의 답안이 나타납니다. </p>
+        <p id="studentanswer_all"></p>
+   
 
+        
         <button onclick="diagnosis_feedback()" class="btn btn-primary">피드백 받기</button>
-        <p id="final_result">버튼을 누르면 GPT의 피드백 결과가 나타납니다.</p>
+        <p id="final_result"></p>
 
-        <div class="mb-4">
-            <p>문항에 필요한 인지요소는 세 가지 입니다. GPT의 세 인지요소에 대한 진단을 살펴보고 학습에 참고하세요. </p>
-            <li>상황을 문자로 표현하기</li>
-            <li>일차식의 계산</li>
-            <li>해의 의미</li>
-        </div>
+
 
     
         

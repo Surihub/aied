@@ -1,13 +1,16 @@
-@import url('https://fonts.googleapis.com/css2?family=Gothic+A1&family=Nanum+Gothic+Coding&family=Poor+Story&display=swap');
-
+@import url('https://fonts.googleapis.com/css2?family=Gothic+A1&family=Nanum+Gothic+Coding&family=Noto+Sans+KR&family=Poor+Story&family=Rubik+Doodle+Shadow&display=swap');
 /* Global Styles */
 body {
-    font-family: 'Gothic A1', monospace;
+    font-family: 'Noto Sans KR', monospace;
     color: var(--text-color);
     background-color: var(--background-color);
-    margin: 80px;
+    margin: 5%;
     padding: 0;
     line-height: 1.6;
+}
+
+.big-title {
+    font-family: "Rubik Doodle Shadow", monospace;
 }
 
 .fixed-bottom {
@@ -16,6 +19,27 @@ body {
     width: 100%;
 }
 
+/* 페이지설명글 */
+
+.custom-padding {
+    padding: 30px; /* or any value you prefer */
+    margin:10px;
+}
+
+
+/* header */
+.custom-toggler {
+    border-color: #007bff; /* Blue border */
+    background-color: transparent;
+}
+
+.custom-toggler:hover {
+    background-color: #007bff; /* Blue background on hover */
+}
+
+.custom-toggler .navbar-toggler-icon {
+    background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='%23007bff' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E");
+}
 
 /* github icon */
 .github-icon {
@@ -31,7 +55,7 @@ body {
 /* nav */
 .navbar {
     background-color: #96caff; /* 예시로 연한 회색을 사용, 원하는 색으로 변경 가능 */
-    /* font-family: 'Arial', sans-serif; 폰트 스타일 변경 */
+    font-family: 'Gothic A1', sans-serif;
     margin-top: 0 !important;
     margin-bottom: 20px !important;
     margin-left: 0 !important;
@@ -72,9 +96,9 @@ body {
 }
 
 /* q learning */
-body {
+/* body {
     font-family: 'Inter', sans-serif;
-}
+} */
 .red-text {
     color: red;
 }
