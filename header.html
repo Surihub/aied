@@ -1,39 +1,53 @@
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
 <link rel="stylesheet" href="style/style.css">
-
-<!-- 네비게이션 바 -->
-<nav class="navbar navbar-nav navbar-expand-lg bg-light mb-4">
+<nav class="navbar navbar-expand-lg bg-light mb-4">
     <div class="container-fluid">
-        <!-- Sidebar Toggle Button -->
-        <button class="btn btn-primary" type="button" id="sidebarToggle">menu</button>
+        <div class="navbar-header">
+            <!-- Sidebar Toggle Button -->
+            <button class="btn btn-primary" type="button" id="sidebarToggle">menu</button>
 
-        <!-- Rest of your navbar -->
-        <!-- ... -->
-
+            <!-- Sidebar that will collapse -->
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav" style="margin-left:0px;">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html">🏠 home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="XR.html">👾 증강현실(XR)</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="Q_learning_example.html">🐢 거북미 미로 탈출</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="math js.html">💯 수학 GPT-TUTOR</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="EDA.html">🐧 데이터 분석</a>
+                    </li>
+                </ul>
+                </ul>
+            </div>
+        </div>
     </div>
 </nav>
 
-<!-- Sidebar -->
-<div id="sidebar" class="sidebar bg-light" style="display: none;">
-    <!-- Sidebar content here -->
-    <ul class="navbar-nav">
-        <li class="nav-item">
-            <a class="nav-link" href="index.html">🏠 home</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="XR.html">👾 증강현실(XR)</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="Q_learning_example.html">🐢 거북미 미로 탈출</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="math js.html">💯 수학 GPT-TUTOR</a>
-        </li>
+<script>
+    document.getElementById('sidebarToggle').addEventListener('click', function() {
+    var sidebar = document.getElementById('navbarNav');
+    sidebar.classList.toggle('collapse');
+});
 
-        <li class="nav-item">
-            <a class="nav-link" href="EDA.html">🐧 데이터 분석</a>
-        </li>
-    </ul>
+</script>
+
+
+
+
+
+<div style="position: absolute; top: 0; right: 0; margin:60px;">
+
+    <a href="https://aiednet.kr/main/main.php" id="aiednet-logo">
+        <img src="./image/logo.png" alt="Logo" style="height: 20px;">
+    </a>
 </div>
 
 <!-- 제목 -->

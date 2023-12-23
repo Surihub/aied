@@ -10,9 +10,13 @@ document.addEventListener('DOMContentLoaded', () => {
             questions.forEach((question, index) => {
                 if (index > 0 && index < 6) { // 첫 번째 행(헤더) 제외
                     container.innerHTML += `
-                        <div class="mb-4">
-                            <p>[문제${index}] ${question['문항내용']}</p>
-                            <input type="text" id="answer${index}" class="form-control answer-input" placeholder="여기에 답을 입력하세요" />
+                        <div class="row mb-4">
+                            <div class="col-md-6">
+                                <p>[문제${index}] ${question['문항내용']}</p>
+                            </div>
+                            <div class="col-md-6">
+                                <input type="text" id="answer${index}" class="form-control" placeholder="여기에 답을 입력하세요" />
+                            </div>
                         </div>
                     `;
                 }
@@ -20,6 +24,7 @@ document.addEventListener('DOMContentLoaded', () => {
         })
         .catch(error => console.error('Error:', error));
 });
+
 
 function parseCSV(csvData) {
     // CSV 파싱 로직을 여기에 구현하세요.

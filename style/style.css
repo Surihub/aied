@@ -19,11 +19,96 @@ body {
     width: 100%;
 }
 
+
+
+#sidebarToggle {
+    background-color: #c5daf3; /* Green background */
+    border: none; /* Remove borders */
+    color: rgb(113, 113, 113); /* White text */
+    padding: 10px 24px; /* Some padding */
+    text-align: center; /* Center the text */
+    text-decoration: none; /* Remove underline from text */
+    display: inline-block; /* Keep it inline */
+    font-size: 16px; /* Increase font size */
+    margin: 4px 2px; /* Some margin */
+    transition-duration: 0.4s; /* Animation time */
+    cursor: pointer; /* Pointer cursor on hover */
+    border-radius: 5px; /* Rounded corners */
+}
+
+#sidebarToggle:hover {
+    background-color: #4976b0; /* Darker green on hover */
+    color:white;
+}
+
+@media (min-width: 992px) {
+    #sidebarToggle {
+        display: none; /* Hide button on larger screens */
+    }
+}
+
+
+
+@media (min-width: 992px) {
+    .navbar-header {
+        display: flex;
+        align-items: center;
+    }
+    #navbarNav.collapse {
+        display: flex !important;
+    }
+    #navbarNav {
+        display: none;
+    }
+}
+
+@media (max-width: 991px) {
+    .navbar-header {
+        display: block;
+    }
+    #navbarNav.collapse {
+        display: none !important;
+    }
+}
+
+/* Initial CSS for your menu container */
+.menu-container {
+    position: absolute;
+    top: 50px; /* Adjust as per your button's position */
+    left: 0;
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    display: none;
+    flex-direction: column;
+  }
+  
+  /* CSS for expanded menu for narrow screens */
+  .menu-container.expanded {
+    display: flex;
+  }
+  
+  /* CSS for expanded menu for wide screens */
+  @media screen and (min-width: 768px) {
+    .menu-container.expanded {
+      flex-direction: row;
+      width: 100%; /* or any fixed width if you prefer */
+      display: flex;
+    }
+  }
+  
+
+/* aiednet logo */
+.aiednet-logo {
+    width:20px;
+    bottom:0;
+}
 /* 페이지설명글 */
 
 .custom-padding {
     padding: 30px; /* or any value you prefer */
     margin:10px;
+    margin-bottom:50px;
 }
 
 
@@ -91,8 +176,12 @@ body {
   
 /* 추가된 CSS 스타일 */
 .answer-input {
-    height: 50px; /* 증가된 높이 */
+    height: 100px; /* 증가된 높이 */
     margin-top: 10px; /* 문제 아래에 위치하도록 여백 추가 */
+}
+ 
+.form-control {
+    height:80px;
 }
 
 /* q learning */
