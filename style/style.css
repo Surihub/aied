@@ -209,6 +209,7 @@ body {
 
 .apiKey {
     width: 80%;
+    height: 40px;
     padding: 13px; /* 패딩 */
     border: 2px solid rgb(250, 212, 22); /* 테두리 */
     border-radius: 5px; /* 테두리 둥글게 */
