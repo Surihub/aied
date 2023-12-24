@@ -317,7 +317,7 @@ function updateHistogram(data, attribute, start, binSize) {
 
 
 
-d3.csv("/data/penguins_dropna.csv").then(data => {
+d3.csv("./data/penguins_dropna.csv").then(data => {
     data.forEach(d => {
         d.bill_depth_mm = +d.bill_depth_mm;
         d.bill_length_mm = +d.bill_length_mm;
