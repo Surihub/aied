@@ -104,7 +104,7 @@ function drawPieChart(data, category) {
     const colorScale = d3.scaleOrdinal(myColors);
 
     // 파이 차트 조각 그리기
-    svg.selectAll('path')
+    const path = svg.selectAll('path')
         .data(pie(Array.from(categoryCount)))
         .enter().append('path')
         .attr('d', arc)
@@ -112,16 +112,47 @@ function drawPieChart(data, category) {
         .attr('stroke', 'white')
         .style('stroke-width', '2px');
 
-    // 라벨 추가
-    const labelArc = d3.arc().innerRadius(radius - 40).outerRadius(radius - 40);
-    svg.selectAll('text')
+    // 각 조각에 범주 이름 추가
+    svg.selectAll('text.label')
         .data(pie(Array.from(categoryCount)))
         .enter().append('text')
-        .attr('transform', d => `translate(${labelArc.centroid(d)})`)
+        .attr('class', 'label')
+        .attr('transform', d => `translate(${arc.centroid(d)})`)
         .attr('dy', '0.35em')
-        .text(d => `${d.data[0]} (${d.data[1]})`)
-        .style('text-anchor', 'middle');
-}
+        .style('text-anchor', 'middle')
+        .text(d => d.data[0]);
+
+    // 툴팁을 위한 SVG 그룹 추가
+    const tooltipGroup = svg.append('g')
+        .attr('class', 'tooltip-group')
+        .style('display', 'none');
+
+    tooltipGroup.append('text')
+        .attr('class', 'tooltip-text')
+        .style('text-anchor', 'middle')
+        .attr('dy', '-1.5em');
+
+    // 마우스 오버 및 아웃 이벤트
+    path.on('mouseover', function(event, d) {
+        // 나머지 조각들 회색 처리
+        svg.selectAll('path').style('opacity', 0.3);
+        d3.select(this).style('opacity', 1);
+
+        // 툴팁 위치 및 텍스트 업데이트
+        const percent = (d.data[1] / d3.sum(Array.from(categoryCount), d => d[1]) * 100).toFixed(1);
+        tooltipGroup.style('display', null)
+            .attr('transform', `translate(${arc.centroid(d)})`);
+        tooltipGroup.select('.tooltip-text')
+            .text(`${d.data[1]} (${percent}%)`);
+        }).on('mouseout', function(d) {
+        // 원래 색상 복원 및 툴팁 숨김
+        svg.selectAll('path').style('opacity', 1);
+        tooltipGroup.style('display', 'none');
+    
+        // 여기에 범주 이름만 다시 표시하는 코드 추가
+        svg.selectAll('text.label').text(d => d.data[0]);
+    })
+};
 
 function drawBarChart(data, category) {
     // 컨테이너 요소의 크기를 기준으로 SVG 크기 설정
@@ -152,6 +183,12 @@ function drawBarChart(data, category) {
         .range([height - margin.top - margin.bottom, 0])
         .domain([0, d3.max(categoryCount, d => d.value)]);
 
+    // 툴팁을 위한 div 요소 생성
+    const tooltip = d3.select('body').append('div')
+        .attr('class', 'tooltip')
+        .style('opacity', 0);
+
+    
     // 막대 그리기
     svg.selectAll('.bar')
         .data(categoryCount)
@@ -163,6 +200,33 @@ function drawBarChart(data, category) {
         .attr('height', d => height - margin.top - margin.bottom - y(d.value))
         .attr('fill', myColors[0]);
 
+    // 빈도수 텍스트를 위한 그룹
+    const freqTextGroup = svg.append('g')
+        .attr('class', 'freq-text-group');
+
+    // 마우스 오버 이벤트
+    svg.selectAll('.bar')
+        .on('mouseover', function(event, d) {
+            // 나머지 막대 연한 회색 처리
+            svg.selectAll('.bar').style('fill', 'lightgray');
+            d3.select(this).style('fill', myColors[0]);
+
+            // 빈도수 텍스트 추가
+            freqTextGroup.append('text')
+                .attr('class', 'freq-text')
+                .attr('x', x(d.key) + x.bandwidth() / 2)
+                .attr('y', y(d.value) - 5)
+                .style('text-anchor', 'middle')
+                .text(d.value);
+        })
+        .on('mouseout', function(d) {
+            // 모든 막대 원래 색상 복원
+            svg.selectAll('.bar').style('fill', myColors[0]);
+
+            // 빈도수 텍스트 제거
+            freqTextGroup.select('.freq-text').remove();
+        });
+
     // X 축 추가
     svg.append('g')
         .attr('transform', `translate(0, ${height - margin.top - margin.bottom})`)
@@ -172,6 +236,7 @@ function drawBarChart(data, category) {
     svg.append('g')
         .call(d3.axisLeft(y));
 }
+
 async function drawScatterPlot(data, xval, yval, cat) {
     const width = 500;
     const height = 500;
