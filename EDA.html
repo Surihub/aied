@@ -8,6 +8,7 @@
     <link href="style/style.css" rel="stylesheet">
     <link href="style/scatterplot.css" rel="stylesheet">
     <script type="module" src="script/eda2.js"></script>
+    <script src="https://unpkg.com/ml5@latest/dist/ml5.min.js"></script>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -50,13 +51,12 @@
             <div class="row">
                 <div class="col-md-8">
                     <h2>펭귄 데이터로 살펴보는 데이터 분석과 AI</h2>
-                    <h4>🐧 펭귄 데이터란?</h4>
+                    <h4><br>🐧 펭귄 데이터란?</h4>
                     <p>펭귄 데이터는 남극 지역 펭귄들의 다양한 특성을 담고 있습니다. 펭귄 데이터는 데이터 과학과 인공지능 분야에서도 분류나 예측을 할 수 있어 흥미로운 분석 대상이 됩니다.</p>
                     <h4>💡 학습 순서</h4>
                     <li>탐색적 데이터 분석</li>
                     <li>데이터로 예측하고 분류하기</li>
-                    
-                    </p>
+                    <li>데이터 출처 : <a href="https://raw.githubusercontent.com/seaborn/seaborn-data/master/penguins.csv">Gorman KB, Williams TD, Fraser WR (2014)</a></li>
                 </div>
                 <!-- Right Column for Image -->
                 <div class="col-md-4">
@@ -78,16 +78,16 @@
     </style>
     
 
-    <h2>Considering penguins data</h2>
-    <table border="1">
+    <h2>펭귄데이터 구경하기</h2>
+    <table>
         <tr>
-            <th>종류</th>
-            <th>섬</th>
-            <th>부리 길이(mm)</th>
-            <th>부리 깊이(mm)</th>
-            <th>날개 길이(mm)</th>
-            <th>몸무게(g)</th>
-            <th>성별</th>
+            <th>species</th>
+            <th>island</th>
+            <th>bill_length_mm</th>
+            <th>bill_depth_mm</th>
+            <th>flipper_length_mm</th>
+            <th>body_mass_g</th>
+            <th>sex</th>
         </tr>
         <tr>
             <td>Adelie</td>
@@ -96,26 +96,73 @@
             <td>18.7</td>
             <td>181</td>
             <td>3750</td>
-            <td>Male</td>
+            <td>MALE</td>
         </tr>
-        <!-- 여기에 더 많은 데이터 행을 추가하세요 -->
-    </table>  
+        <tr>
+            <td>Adelie</td>
+            <td>Torgersen</td>
+            <td>39.5</td>
+            <td>17.4</td>
+            <td>186</td>
+            <td>3800</td>
+            <td>FEMALE</td>
+        </tr>
+        <tr>
+            <td>Adelie</td>
+            <td>Torgersen</td>
+            <td>40.3</td>
+            <td>18</td>
+            <td>195</td>
+            <td>3250</td>
+            <td>FEMALE</td>
+        </tr>
+    </table>
+        
     <h2>Explore the data</h2>
-    <h3>categorical data</h3>
-    <div id="pie-chart"></div>
 
-    <h3>numerical data</h3>
+    <h3>범주형 데이터 시각화하기</h3>
+    <h4>원그래프</h4>
+    <div class="pie-container">
+        <div class="pie-item" id="pie-species"></div>
+        <div class="pie-item" id="pie-island"></div>
+        <div class="pie-item" id="pie-sex"></div>
+    </div>
+
+    <h4>막대그래프</h4>
+    <div class="bar-container">
+        <div class="bar-item" id="bar-species"></div>
+        <div class="bar-item" id="bar-island"></div>
+        <div class="bar-item" id="bar-sex"></div>
+    </div>
+
+    <h3>수치형 데이터 시각화하기</h3>
+    <h4>히스토그램</h4>
     <div id="histogram"></div>
+    <label for="startSlider">Start Value:</label>
+    <input type="range" id="startSlider">
+    <label for="rangeSlider">Range:</label>
+    <input type="range" id="rangeSlider">
+    
+    <label for="columnSelect">Choose a Column:</label>
+    <select id="columnSelect">
+        <option value="bill_length_mm">Bill Length (mm)</option>
+        <option value="bill_depth_mm">Bill Depth (mm)</option>
+        <option value="flipper_length_mm">Flipper Length (mm)</option>
+        <option value="body_mass_g">Body Mass (g)</option>
+    </select>
+    
 
-    <div id="scatter-plot"></div>
-
-    <h2>Classify and Predict!</h2>
-    <h2>펭귄 데이터 클러스터링 결과</h2>
-
-    <h2>펭귄 데이터 회귀분석</h2>
+    <h4>산점도</h4>
 
     <!-- 시각화를 위한 div -->
-    <div class="canvas"></div>
+    <div class="canvas-scatter"></div>
+
+    
+
+
+<!--     
+    <h2>Classify and Predict!</h2>
+    <h2>펭귄 데이터 회귀분석</h2> -->
 
 
 
