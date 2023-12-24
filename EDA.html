@@ -79,7 +79,8 @@
     
 
     <h2>펭귄데이터 구경하기</h2>
-    <table>
+    <div id="penguin-tooltip" style="display: none;"></div> <!-- 툴팁을 위한 div -->
+    <table id="penguin-table">
         <tr>
             <th>species</th>
             <th>island</th>
@@ -136,22 +137,25 @@
     </div>
 
     <h3>수치형 데이터 시각화하기</h3>
-    <h4>히스토그램</h4>
-    <div id="histogram"></div>
-    <label for="startSlider">Start Value:</label>
-    <input type="range" id="startSlider">
-    <label for="rangeSlider">Range:</label>
-    <input type="range" id="rangeSlider">
+    <div class="histogram-container">
+        <h4>히스토그램</h4>
+        <div id="histogram"></div>
+        <div class="controls-container">
+            <label for="startSlider">계급 시작값: <span id="startValue">0</span></label>
+            <input type="range" id="startSlider" class="control-item" min="0" max="100" value="0">
+            <label for="rangeSlider">계급의 크기: <span id="rangeValue">10</span></label>
+            <input type="range" id="rangeSlider" class="control-item" min="1" max="50" value="10">
+            <label for="columnSelect">열 이름</label>
+            <select id="columnSelect" class="control-item">
+                <option value="bill_length_mm">Bill Length (mm)</option>
+                <option value="bill_depth_mm">Bill Depth (mm)</option>
+                <option value="flipper_length_mm">Flipper Length (mm)</option>
+                <option value="body_mass_g">Body Mass (g)</option>
+            </select>
+        </div>
+    </div>
     
-    <label for="columnSelect">Choose a Column:</label>
-    <select id="columnSelect">
-        <option value="bill_length_mm">Bill Length (mm)</option>
-        <option value="bill_depth_mm">Bill Depth (mm)</option>
-        <option value="flipper_length_mm">Flipper Length (mm)</option>
-        <option value="body_mass_g">Body Mass (g)</option>
-    </select>
     
-
     <h4>산점도</h4>
 
     <!-- 시각화를 위한 div -->

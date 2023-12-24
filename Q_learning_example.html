@@ -13,6 +13,7 @@
     <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
+
 <body class="bg-gray-50">
     <div id="header"></div>
     <div class="container my-5">
@@ -21,8 +22,10 @@
             <div class="row">
                 <div class="col-md-8">
                     <h2>거북이 미로 탈출</h2>
-                    <b><br>학습 목표 : </b> 거북이 미로 탈출 예제를 통한 Q-learning 학습 <br>
-                    <b>대상 학년 : </b> 고등학교 1~2학년 <br><br>
+                    <h4><br>학습 목표</h4>
+                    <p>거북이 미로 탈출 예제를 통한 Q-learning 학습 </p>
+                    <h4>학습 대상</h4>
+                    <p>고등학교 1~2학년</p>
                     
                     <h4>💡 학습 내용</h4>
                     1. 강화학습의 기본 용어 <br>
@@ -347,11 +350,14 @@ before_learn_path = get_path()
 print(before_learn_path[:30])
     </py-repl>
     <div class="max-w-2xl mx-auto my-10 p-5">
-    <div class="flex space-x-4 mt-4">
-        <button id="moveButton1" class="px-6 py-2 border rounded text-white bg-blue-500 hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50">
-            미로 탈출 경로 시각화하기로 이동
-        </button>
-    </div>
+        <div class="max-w-2xl mx-auto my-10 p-5">
+            <div class="d-flex justify-content-center mt-4">
+                <button id="moveButton1" class="px-6 py-2 border rounded text-white bg-blue-500 hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50">
+                    미로 탈출 경로 시각화하기로 이동
+                </button>
+            </div>
+        </div>
+        
     </div>
     <script>
         document.getElementById('moveButton1').addEventListener('click', function() {
@@ -419,12 +425,13 @@ after_learn_path = get_shortest_path()
 print(after_learn_path)
     </py-repl>
     <div class="max-w-2xl mx-auto my-10 p-5">
-    <div class="flex space-x-4 mt-4">
-        <button id="moveButton2" class="px-6 py-2 border rounded text-white bg-blue-500 hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50">
-            미로 탈출 경로 시각화하기로 이동
-        </button>
+        <div class="d-flex justify-content-center mt-4">
+            <button id="moveButton2" class="px-6 py-2 border rounded text-white bg-blue-500 hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50">
+                미로 탈출 경로 시각화하기로 이동
+            </button>
+        </div>
     </div>
-    </div>
+    
     <script>
         document.getElementById('moveButton2').addEventListener('click', function() {
           const targetElement = document.getElementById("interactive-maze");

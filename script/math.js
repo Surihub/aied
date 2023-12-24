@@ -10,7 +10,7 @@ document.addEventListener('DOMContentLoaded', () => {
             questions.forEach((question, index) => {
                 if (index > 0 && index < 6) { // 첫 번째 행(헤더) 제외
                     container.innerHTML += `
-                        <div class="row mb-4">
+                    <div class="row mb-4">
                             <div class="col-md-6">
                                 <p>[문제${index}] ${question['문항내용']}</p>
                             </div>

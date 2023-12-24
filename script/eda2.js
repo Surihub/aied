@@ -1,5 +1,6 @@
 import * as d3 from "https://cdn.jsdelivr.net/npm/d3@7/+esm";
 
+
 // 열 통계 정보 계산 함수
 function getColumnStatistics(data) {
     let columnInfo = {};
@@ -24,35 +25,58 @@ function addColumnTooltips(data) {
     const headers = document.querySelectorAll('th');
 
     headers.forEach(header => {
-        let tooltip = null;
+        let tabletooltip = null;
 
         header.addEventListener('mouseover', function() {
             const columnName = this.innerText.toLowerCase().replace(/ /g, "_");
             const tooltipText = columnInfo[columnName];
 
             // 툴팁 생성 및 스타일 설정
-            tooltip = document.createElement('div');
-            tooltip.style.position = 'absolute';
-            tooltip.style.border = '1px solid black';
-            tooltip.style.background = 'yellow';
-            tooltip.style.padding = '5px';
-            tooltip.style.zIndex = '1000';
-            tooltip.innerText = tooltipText;
+            tabletooltip = document.createElement('div');
+            tabletooltip.style.position = 'absolute';
+            tabletooltip.style.background = 'orange';
+            tabletooltip.style.padding = '5px';
+            tabletooltip.style.zIndex = '1000';
+            tabletooltip.innerText = tooltipText;
 
             // 툴팁 위치 설정
-            tooltip.style.left = header.getBoundingClientRect().left + 'px';
-            tooltip.style.top = (header.getBoundingClientRect().bottom + window.scrollY) + 'px';
-            document.body.appendChild(tooltip);
+            tabletooltip.style.left = header.getBoundingClientRect().left + 'px';
+            tabletooltip.style.top = (header.getBoundingClientRect().bottom + window.scrollY) -80 + 'px';
+            document.body.appendChild(tabletooltip);
         });
 
         header.addEventListener('mouseout', function() {
-            if (tooltip) {
-                document.body.removeChild(tooltip);
-                tooltip = null;
+            if (tabletooltip) {
+                document.body.removeChild(tabletooltip);
+                tabletooltip = null;
             }
         });
     });
 }
+
+
+// // 열 통계 정보 계산 함수
+// function getColumnStatistics(columnData) {
+//     // 수치형 데이터 검사
+//     const isNumeric = columnData.every(item => !isNaN(item) && item !== '');
+//     let content;
+
+//     if (isNumeric) {
+//         const numbers = columnData.map(Number).filter(n => !isNaN(n));
+//         const min = Math.min(...numbers);
+//         const max = Math.max(...numbers);
+//         const avg = numbers.reduce((a, b) => a + b, 0) / numbers.length;
+//         content = `최소: ${min}, 최대: ${max}, 평균: ${avg.toFixed(2)}`;
+//     } else {
+//         // 고유값 추출
+//         const uniqueValues = [...new Set(columnData)].join(', ');
+//         content = `고유값: ${uniqueValues}`;
+//     }
+//     return content;
+// }
+
+
+const myColors = ['#f49f30', '#e0353d', '#b20089','#6600a7'];
 
 
 function drawPieChart(data, category) {
@@ -76,8 +100,8 @@ function drawPieChart(data, category) {
     const pie = d3.pie().value(d => d[1]);
     const arc = d3.arc().innerRadius(0).outerRadius(radius);
 
-    // 색상 스케일 설정
-    const colorScale = d3.scaleOrdinal(d3.schemeCategory10);
+    // 팔레트
+    const colorScale = d3.scaleOrdinal(myColors);
 
     // 파이 차트 조각 그리기
     svg.selectAll('path')
@@ -137,7 +161,7 @@ function drawBarChart(data, category) {
         .attr('y', d => y(d.value))
         .attr('width', x.bandwidth())
         .attr('height', d => height - margin.top - margin.bottom - y(d.value))
-        .attr('fill', 'steelblue');
+        .attr('fill', myColors[0]);
 
     // X 축 추가
     svg.append('g')
@@ -148,27 +172,29 @@ function drawBarChart(data, category) {
     svg.append('g')
         .call(d3.axisLeft(y));
 }
-
-
 async function drawScatterPlot(data, xval, yval, cat) {
     const width = 500;
     const height = 500;
-    const margin = { top: 30, right: 30, bottom: 30, left: 30 };
-    const color = d3.scaleOrdinal(d3.schemeTableau10);
+    const margin = { top: 30, right: 30, bottom: 70, left: 60 }; // Adjusted for label space
 
+    // Palette
+    const color = d3.scaleOrdinal(myColors);
+
+    // Scales
     const x = d3.scaleLinear()
                 .domain(d3.extent(data, d => parseFloat(d[xval])))
                 .range([margin.left, width - margin.right]);
-
     const y = d3.scaleLinear()
                 .domain(d3.extent(data, d => parseFloat(d[yval])))
                 .range([height - margin.bottom, margin.top]);
 
+    // Canvas setup
     const canvas = d3.select(".canvas-scatter");
     const svg = canvas.append('svg')
                       .attr('height', height)
                       .attr('width', width);
 
+    // Circles
     svg.selectAll("circle")
         .data(data)
         .join('circle')
@@ -179,36 +205,54 @@ async function drawScatterPlot(data, xval, yval, cat) {
           .on('mouseover', mouseover)
           .on('mouseout', mouseout);
 
+    // X Axis
     const xAxis = d3.axisBottom(x);
-    const yAxis = d3.axisLeft(y);
-
     svg.append('g')
        .attr('transform', `translate(0, ${height - margin.bottom})`)
-       .call(xAxis);
+       .call(xAxis)
+       .append('text') // X Axis Label
+       .attr('class', 'axis-label')
+       .attr('x', width - margin.right)
+       .attr('y', margin.bottom / 2)
+       .style('fill', 'black')
+       .style('text-anchor', 'end')
+       .text(xval);
 
+    // Y Axis
+    const yAxis = d3.axisLeft(y);
     svg.append('g')
        .attr('transform', `translate(${margin.left}, 0)`)
-       .call(yAxis);
+       .call(yAxis)
+       .append('text') // Y Axis Label
+       .attr('class', 'axis-label')
+       .attr('transform', 'rotate(-90)')
+       .attr('y', -margin.left + 20)
+       .attr('x', -height / 2 + margin.top)
+       .style('fill', 'black')
+       .style('text-anchor', 'end')
+       .text(yval);
 
-    const tooltip = d3.select('.canvas').append('div')
+    // Tooltip
+    const tooltip = d3.select('body').append('div')
                     .attr('class', 'tooltip')
                     .style('opacity', 0);
 
+    // Mouseover Event
     function mouseover(event, d) {
         tooltip
-          .style('opacity', 1)
           .html(`${xval}: ${d[xval]}<br/>${yval}: ${d[yval]}<br/>${cat}: ${d[cat]}`)
-          .style('left', `${d3.pointer(event)[0] + 30}px`)
-          .style('top', `${d3.pointer(event)[1]}px`);
+          .style('left', `${event.pageX}px`)
+          .style('top', `${event.pageY}px`)
+          .style('opacity', 1); // Show tooltip without transition
     }
-
+    
+    // Mouseout Event
     function mouseout() {
         tooltip
-          .style('opacity', 0)
-          .style('left', '0px')
-          .style('top', '0px');
+          .style('opacity', 0); // Hide tooltip without transition
     }
 }
+
 
 /////////////////
 function updateHistogram(data, attribute, start, binSize) {
@@ -264,7 +308,7 @@ function updateHistogram(data, attribute, start, binSize) {
         .attr("transform", d => `translate(0,${y(d.length)})`)
         .attr("width", d => Math.max(0, x(d.x1) - x(d.x0) - 1))
         .attr("height", d => height - y(d.length))
-        .style("fill", "#69b3a2");
+        .style("fill", myColors[2]);
 }
 
 
@@ -283,6 +327,8 @@ d3.csv("/data/penguins_dropna.csv").then(data => {
         d.island = d.island;
         d.sex = d.sex;
     });
+    console.log('hi', getColumnStatistics(data));
+    addColumnTooltips(data);
 
     // 각 차트를 그리는 함수를 호출
     drawPieChart(data, 'species');
@@ -296,42 +342,42 @@ d3.csv("/data/penguins_dropna.csv").then(data => {
     drawScatterPlot(data, 'bill_length_mm', 'bill_depth_mm', 'species');
     drawScatterPlot(data, 'flipper_length_mm', 'body_mass_g', 'sex');
 
+    
+    // Slider elements
+    const startSlider = document.getElementById('startSlider');
+    const rangeSlider = document.getElementById('rangeSlider');
+    const columnSelect = document.getElementById('columnSelect');
 
-// Slider elements
-const startSlider = document.getElementById('startSlider');
-const rangeSlider = document.getElementById('rangeSlider');
-const columnSelect = document.getElementById('columnSelect');
+    // Function to update slider ranges and initial values based on the selected column
+    function updateSliderRanges(selectedColumn) {
+        const values = data.map(d => +d[selectedColumn]);
+        const m1 = Math.min(...values);
+        const m2 = Math.max(...values);
+        const range = m2 - m1;
 
-// Function to update slider ranges and initial values based on the selected column
-function updateSliderRanges(selectedColumn) {
-    const values = data.map(d => +d[selectedColumn]);
-    const m1 = Math.min(...values);
-    const m2 = Math.max(...values);
-    const range = m2 - m1;
+        // Set start slider range and initial value
+        startSlider.min = m1 - range / 10;
+        startSlider.max = m1;
+        startSlider.value = startSlider.min;
 
-    // Set start slider range and initial value
-    startSlider.min = m1 - range / 10;
-    startSlider.max = m1;
-    startSlider.value = startSlider.min;
+        // Set range slider range and initial value
+        rangeSlider.min = range / 100;
+        rangeSlider.max = range / 5;
+        rangeSlider.value = range / 20;
+    }
 
-    // Set range slider range and initial value
-    rangeSlider.min = range / 100;
-    rangeSlider.max = range / 5;
-    rangeSlider.value = range / 20;
-}
+    // Function to update the histogram
+    function updateChart() {
+        const selectedColumn = columnSelect.value;
+        updateHistogram(data, selectedColumn, +startSlider.value, +rangeSlider.value);
+    }
 
-// Function to update the histogram
-function updateChart() {
-    const selectedColumn = columnSelect.value;
-    updateHistogram(data, selectedColumn, +startSlider.value, +rangeSlider.value);
-}
-
-// Event listeners for sliders and dropdown
-startSlider.addEventListener('input', updateChart);
-rangeSlider.addEventListener('input', updateChart);
-columnSelect.addEventListener('change', () => {
-    updateSliderRanges(columnSelect.value);
-    updateChart();
+    // Event listeners for sliders and dropdown
+    startSlider.addEventListener('input', updateChart);
+    rangeSlider.addEventListener('input', updateChart);
+    columnSelect.addEventListener('change', () => {
+        updateSliderRanges(columnSelect.value);
+        updateChart();
 });
 
 // Initial setup
@@ -342,3 +388,19 @@ updateChart();
 
 });
 
+// histogram update
+
+document.addEventListener('DOMContentLoaded', (event) => {
+    const startSlider = document.getElementById('startSlider');
+    const rangeSlider = document.getElementById('rangeSlider');
+    const startValue = document.getElementById('startValue');
+    const rangeValue = document.getElementById('rangeValue');
+
+    startSlider.addEventListener('input', function() {
+        startValue.textContent = this.value;
+    });
+
+    rangeSlider.addEventListener('input', function() {
+        rangeValue.textContent = this.value;
+    });
+});
