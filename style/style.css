@@ -305,7 +305,7 @@ body {
 
 /* table-penguins */
 table {
-    margin-top: 80px; /* 테이블 주변의 마진 설정 */
+    margin-top: 40px; /* 테이블 주변의 마진 설정 */
     margin-bottom:50px;
     border-collapse: collapse; /* 테두리 겹치기 설정 */
     width: 80%; /* 테이블의 너비 */

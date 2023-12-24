@@ -7,6 +7,14 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="style/style.css" rel="stylesheet">
     <script type="module" src="script/eda2.js"></script>
+
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.css">
+    <script type="text/javascript" charset="utf8" src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.js"></script>
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/rowgroup/1.1.5/js/dataTables.rowGroup.min.js"></script>
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -54,7 +62,10 @@
                     <h4>💡 학습 순서</h4>
                     <li>탐색적 데이터 분석</li>
                     <li>데이터로 예측하고 분류하기</li>
-                    <li>데이터 출처 : <a href="https://raw.githubusercontent.com/seaborn/seaborn-data/master/penguins.csv">Gorman KB, Williams TD, Fraser WR (2014)</a></li>
+                    <li>데이터 출처 : <a href="https://raw.githubusercontent.com/seaborn/seaborn-data/master/penguins.csv">Gorman KB, Williams TD, Fraser WR (2014)<br><br></a></li>
+                    <h4>🔍다른 데이터도 살펴보기</h4>
+                    <a href="https://plotify.streamlit.app">https://plotify.streamlit.app</a>
+
                 </div>
                 <!-- Right Column for Image -->
                 <div class="col-md-4">
@@ -64,8 +75,11 @@
         </div>
     </div>
     
+<!-- 추가 -->
 
 
+
+<!-- 추가 -->
     
     <style>
         @media (max-width: 768px) {
@@ -75,8 +89,20 @@
         }
     </style>
     
+    
+    <h2 style="font-family:Rubik Doodle Shadow; font-size:2em;">펭귄데이터 구경하기</h2>
+    <p>펭귄데이터는 다양한 섬(island)에 사는 여러 종(species)의 펭귄들의 성별, 부리 길이, 부리 깊이, 날개 길이, 몸무게 등 측정한 자료를 수집한 것입니다.</p>
+    <h5>어떤 종류의 펭귄이 있나요?</h5>
+    <img src="./image/species.png" style="width:60%; ">
+    <h5>각 측정값은 무엇을 의미할까요?</h5>
+    <img src="https://media.cheggcdn.com/media/607/607b71bb-2ade-43d0-90a6-3157768efdf2/phpCqGC3Z">
+        <!-- <table class="table table-striped" id="data-table"></table> -->
 
-    <h2>펭귄데이터 구경하기</h2>
+
+        <p>펭귄데이터는 총 333개이나, 너무 많아 미리보기에서는 생략했습니다. </p>
+        <p>열 이름에 마우스를 올려보세요. 범주형 데이터의 경우 고유한 값들이, 수치형 데이터인 경우 간단한 기술통계량이 나옵니다. </p>
+    <!-- <table class="table table-striped" id="data-table"></table> -->
+
     <div id="penguin-tooltip" style="display: none;"></div> <!-- 툴팁을 위한 div -->
     <table id="penguin-table">
         <tr>
@@ -117,24 +143,20 @@
         </tr>
     </table>
         
-    <h2>Explore the data</h2>
+    <h2 style="font-family:Rubik Doodle Shadow; font-size:2em;">Explore the data</h2>
 
-    <h3>범주형 데이터 시각화하기</h3>
-    <h4>원그래프</h4>
     <div class="pie-container">
         <div class="pie-item" id="pie-species"></div>
         <div class="pie-item" id="pie-island"></div>
         <div class="pie-item" id="pie-sex"></div>
     </div>
 
-    <h4>막대그래프</h4>
     <div class="bar-container">
         <div class="bar-item" id="bar-species"></div>
         <div class="bar-item" id="bar-island"></div>
         <div class="bar-item" id="bar-sex"></div>
     </div>
 
-    <h3>수치형 데이터 시각화하기</h3>
     <div class="histogram-container">
         <h4>히스토그램</h4>
         <div id="histogram"></div>

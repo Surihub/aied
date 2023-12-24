@@ -392,6 +392,9 @@ d3.csv("./data/penguins_dropna.csv").then(data => {
         d.island = d.island;
         d.sex = d.sex;
     });
+
+
+
     console.log('hi', getColumnStatistics(data));
     addColumnTooltips(data);
 
@@ -468,4 +471,64 @@ document.addEventListener('DOMContentLoaded', (event) => {
     rangeSlider.addEventListener('input', function() {
         rangeValue.textContent = this.value;
     });
+});
+
+// D3.js를 사용하여 CSV 파일 로드 및 표 생성
+var allData;
+var visibleRows = 5; // 초기에 표시할 행 수
+
+// 전체 데이터를 토글하는 함수
+function toggleTable() {
+    var table = d3.select("#data-table");
+    
+    // 현재 표시된 데이터 개수 업데이트
+    visibleRows = (visibleRows === allData.length) ? 5 : allData.length;
+
+    // 새로운 데이터 선택
+    var newData = allData.slice(0, visibleRows);
+
+    // 표 업데이트
+    var rows = table.select("tbody").selectAll("tr")
+        .data(newData, d => d);
+    
+    rows.exit().remove(); // 이전에 표시된 행 제거
+
+    rows.enter().append("tr")
+        .selectAll("td")
+        .data(d => Object.values(d))
+        .enter().append("td")
+        .text(d => d); // 새로운 행 추가
+
+    rows.selectAll("td")
+        .data(d => Object.values(d))
+        .text(d => d); // 기존 행 업데이트
+}
+
+// D3.js를 사용하여 CSV 파일 로드 및 표 생성
+d3.csv("./data/penguins_dropna.csv").then(function(data){
+    allData = data; // 모든 데이터 저장
+
+    // 초기에 표시할 데이터 선택
+    var initialData = data.slice(0, visibleRows);
+
+    // 표 생성을 위한 테이블 요소 선택
+    var table = d3.select("#data-table");
+
+    // 헤더 행 추가
+    table.append("thead")
+        .append("tr")
+        .selectAll("th")
+        .data(Object.keys(initialData[0]))
+        .enter().append("th")
+        .text(d => d);
+
+    // 데이터 행 추가
+    var tbody = table.append("tbody");
+    var rows = tbody.selectAll("tr")
+        .data(initialData)
+        .enter().append("tr")
+        .selectAll("td")
+        .data(d => Object.values(d))
+        .enter().append("td")
+        .text(d => d);
 });
