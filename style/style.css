@@ -10,9 +10,8 @@ body {
 }
 .big-title {
     font-family: "Rubik Doodle Shadow", monospace;
-    font-size: 4rem;
+    font-size: 3rem;
     color: #2c3e50;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
     margin-top: 20px;
     margin-bottom: 20px;
     transition: color 0.3s ease, transform 0.3s ease, text-shadow 0.3s ease; /* 부드러운 전환 효과 */
@@ -457,4 +456,10 @@ th:hover {
 
 .tabletooltip {
     background-color: black;
+}
+
+
+.btnRun{
+    width:100px;
+    opacity: 50;
 }
